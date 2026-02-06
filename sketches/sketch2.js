@@ -45,6 +45,10 @@ registerSketch('sk2', function (p) {
 
       particleX += speed;
 
+      if (particleX > p.width) {
+        particleX = 0;
+      }
+
       if (timeLeft === 0) {
         isRunning = false;
       }

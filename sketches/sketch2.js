@@ -6,8 +6,8 @@ registerSketch('sk2', function (p) {
   let startTime = null;
   let isRunning = false;
 
-  let particleX = 0;
-  let particleY;
+  let particles = [];
+  let numParticles = 40;
   let minSpeed = 0.2;
   let maxSpeed = 6;
 
@@ -31,6 +31,14 @@ registerSketch('sk2', function (p) {
     timeLeft = totalTime;
     startTime = p.millis();
     isRunning = true;
+
+    particles = [];
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: p.random(p.width),
+        y: p.random(p.height),
+      });
+    }
   }
 
   p.draw = function () {
@@ -43,10 +51,12 @@ registerSketch('sk2', function (p) {
       let timeFactor = timeLeft / totalTime;
       let speed = minSpeed + timeFactor * (maxSpeed - minSpeed);
 
-      particleX += speed;
-
-      if (particleX > p.width) {
-        particleX = 0;
+      for (let particle of particles) {
+        particle.x += speed;
+        if (particle.x > p.width) {
+          particle.x = 0;
+          particle.y = p.random(p.height);
+        }
       }
 
       if (timeLeft === 0) {
@@ -55,7 +65,10 @@ registerSketch('sk2', function (p) {
     }
 
     p.fill(0);
-    p.circle(particleX, particleY, 20);
+    for (let particle of particles) {
+      p.circle(particle.x, particle.y, 8);
+    }
+
     p.text(
       `Time Left: ${timeLeft.toFixed(1)}s`,
       p.width / 2,

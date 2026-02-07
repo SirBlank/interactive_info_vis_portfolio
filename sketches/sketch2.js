@@ -3,6 +3,7 @@ registerSketch('sk2', function (p) {
   let secInput;
   let startButton;
   let stopButton;
+  let resetButton;
   let pausedTime = 0;
   let totalTime = 0;
   let timeLeft = 0;
@@ -22,8 +23,11 @@ registerSketch('sk2', function (p) {
     startButton = p.createButton('Start Timer');
     startButton.mousePressed(startTimer);
 
-    stopButton = p.createButton('Stop Timer');
+    stopButton = p.createButton('Stop');
     stopButton.mousePressed(stopTimer);
+
+    resetButton = p.createButton('Reset');
+    resetButton.mousePressed(resetTimer);
 
     particleY = p.height / 2;
 
@@ -40,12 +44,43 @@ registerSketch('sk2', function (p) {
       return;
     }
 
-    totalTime = minutes * 60 + seconds;
-    if (totalTime <= 0) return;
-  
-    timeLeft = totalTime;
+    if (!startTime || timeLeft === totalTime) {
+      totalTime = minutes * 60 + seconds;
+      timeLeft = totalTime;
+      pausedTime = 0;
+
+      particles = [];
+      for (let i = 0; i < numParticles; i++) {
+        particles.push({
+          x: p.random(p.width),
+          y: p.random(p.height),
+        });
+      }
+    }
+
     startTime = p.millis();
     isRunning = true;
+  }
+
+  function stopTimer() {
+    if (!isRunning) return;
+
+    pausedTime += (p.millis() - startTime);
+    isRunning = false;
+  }
+
+  function resetTimer() {
+    let minutes = Number(minInput.value());
+    let seconds = Number(secInput.value());
+
+    if (isNaN(minutes) || isNaN(seconds) || minutes < 0 || seconds < 0 || seconds >= 60) return;
+
+    totalTime = minutes * 60 + seconds;
+    timeLeft = totalTime;
+
+    isRunning = false;
+    startTime = null;
+    pausedTime = 0;
 
     particles = [];
     for (let i = 0; i < numParticles; i++) {
@@ -54,13 +89,6 @@ registerSketch('sk2', function (p) {
         y: p.random(p.height),
       });
     }
-  }
-
-  function stopTimer() {
-    if (!isRunning) return;
-
-    pausedTime += (p.millis() - startTime);
-    isRunning = false;
   }
 
   p.draw = function () {

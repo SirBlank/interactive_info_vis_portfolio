@@ -71,6 +71,7 @@ registerSketch('sk2', function (p) {
         particles.push({
           x: p.random(p.width),
           y: p.random(p.height),
+          color: randomParticleColor()
         });
       }
     }
@@ -122,6 +123,10 @@ registerSketch('sk2', function (p) {
     }
   }
 
+  function randomParticleColor() {
+    return p.color(p.random(255), p.random(255), p.random(255));
+  }
+
   p.draw = function () {
     p.background(220);
 
@@ -149,12 +154,14 @@ registerSketch('sk2', function (p) {
 
     p.fill(0);
     for (let particle of particles) {
+      p.fill(particle.color);
       p.circle(particle.x, particle.y, 8);
     }
 
     let displayMin = Math.floor(timeLeft / 60);
     let displaySec = Math.floor(timeLeft % 60);
 
+    p.fill(0);
     p.text(
       `Time Left: ${displayMin}:${displaySec.toString().padStart(2, '0')}`,
       p.width / 2,

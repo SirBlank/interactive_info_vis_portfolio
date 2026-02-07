@@ -1,6 +1,8 @@
 registerSketch('sk2', function (p) {
   let minInput;
   let secInput;
+  let minLabel;
+  let secLabel;
   let startButton;
   let stopButton;
   let resetButton;
@@ -13,26 +15,41 @@ registerSketch('sk2', function (p) {
   let particles = [];
   let numParticles = 40;
   let minSpeed = 0.2;
-  let maxSpeed = 6;
+  let maxSpeed = 10;
 
   p.setup = function () {
     p.createCanvas(800, 800);
 
+    minlabel = p.createSpan('Minutes: ')
     minInput = p.createInput('0');
-    secInput = p.createInput('30');
+    minInput.style('margin-right', '15px');
+    minInput.style('width', '60px');
+
+    secLabel = p.createSpan('Seconds: ')
+    secInput = p.createInput('15');
+    secInput.style('margin-right', '15px');
+    secInput.style('width', '60px');
+
     startButton = p.createButton('Start Timer');
     startButton.mousePressed(startTimer);
+    startButton.style('margin-right', '15px');
+    startButton.style('width', '120px')
 
     stopButton = p.createButton('Stop');
     stopButton.mousePressed(stopTimer);
+    stopButton.style('margin-right', '15px');
+    stopButton.style('width', '60px');
 
     resetButton = p.createButton('Reset');
     resetButton.mousePressed(resetTimer);
+    resetButton.style('width', '60px');
 
     particleY = p.height / 2;
 
     p.textSize(32);
     p.textAlign(p.CENTER, p.CENTER);
+
+    updateStartButtonLabel();
   };
 
   function startTimer() {
@@ -60,6 +77,8 @@ registerSketch('sk2', function (p) {
 
     startTime = p.millis();
     isRunning = true;
+
+    updateStartButtonLabel();
   }
 
   function stopTimer() {
@@ -67,6 +86,8 @@ registerSketch('sk2', function (p) {
 
     pausedTime += (p.millis() - startTime);
     isRunning = false;
+
+    updateStartButtonLabel();
   }
 
   function resetTimer() {
@@ -89,13 +110,23 @@ registerSketch('sk2', function (p) {
         y: p.random(p.height),
       });
     }
+
+    updateStartButtonLabel();
+  }
+
+  function updateStartButtonLabel() {
+    if (!isRunning && pausedTime > 0 && timeLeft > 0) {
+      startButton.html('Resume Timer');
+    } else {
+      startButton.html('Start Timer')
+    }
   }
 
   p.draw = function () {
     p.background(220);
 
     if (isRunning) {
-      let elapsed = (p.millis() - startTime) / 1000;
+      let elapsed = (pausedTime + (p.millis() - startTime)) / 1000;
       timeLeft = p.max(0, totalTime - elapsed);
 
       let timeFactor = timeLeft / totalTime;
@@ -111,6 +142,8 @@ registerSketch('sk2', function (p) {
 
       if (timeLeft === 0) {
         isRunning = false;
+        pausedTime = 0;
+        updateStartButtonLabel();
       }
     }
 

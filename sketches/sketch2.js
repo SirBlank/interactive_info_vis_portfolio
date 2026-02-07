@@ -45,7 +45,6 @@ registerSketch('sk2', function (p) {
     particleY = p.height / 2;
 
     p.textSize(32);
-    // p.textAlign(p.CENTER, p.CENTER);
 
     updateStartButtonLabel();
   };

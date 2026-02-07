@@ -1,7 +1,7 @@
 registerSketch('sk4', function (p) {
   let radius;
   let lastClickDiff = null;
-  let easyMode = false;
+  let easyMode = true;
   
   p.setup = function () {
     p.createCanvas(800, 800);
@@ -25,6 +25,16 @@ registerSketch('sk4', function (p) {
   p.draw = function () {
     p.background(220);
     p.translate(p.width / 2, p.height / 2);
+
+    p.fill(0);
+    p.textSize(14);
+    p.textAlign(p.LEFT, p.TOP);
+    p.text("Reaction Test:", -p.width / 2 + 10, -p.height / 2 + 10);
+    p.textSize(12);
+    p.text("Click every 10 seconds", -p.width / 2 + 10, -p.height / 2 + 30);
+    p.text("to test your speed.", -p.width / 2 + 10, -p.height / 2 + 45);
+    p.text("The red dot marks", -p.width / 2 + 10, -p.height / 2 + 65);
+    p.text("the target 10s interval.", -p.width / 2 + 10, -p.height / 2 + 80);
 
     p.stroke(0);
     for (let i = 0; i < 60; i++) {

@@ -19,13 +19,22 @@ registerSketch('sk3', function (p) {
     });
 
     drawRadioList({
-      x: 300,
+      x: 200,
       y: 80,
       title: "MINUTES",
       count: 60,
       selected: p.minute(),
       columns: 4
     })
+
+    drawRadioList({
+      x: 500,
+      y: 80,
+      title: "SECONDS",
+      count: 60,
+      selected: p.second(),
+      columns: 4
+    });
   };
 
   function drawRadioList({ x, y, title, count, selected, columns }) {

@@ -1,5 +1,6 @@
 registerSketch('sk2', function (p) {
-  let input;
+  let minInput;
+  let secInput;
   let button;
   let totalTime = 0;
   let timeLeft = 0;
@@ -14,7 +15,8 @@ registerSketch('sk2', function (p) {
   p.setup = function () {
     p.createCanvas(800, 800);
 
-    input = p.createInput('10');
+    minInput = p.createInput('0');
+    secInput = p.createInput('30');
     button = p.createButton('Start Timer');
     button.mousePressed(startTimer);
 
@@ -25,9 +27,17 @@ registerSketch('sk2', function (p) {
   };
 
   function startTimer() {
-    totalTime = Number(input.value());
-    if (isNaN(totalTime) || totalTime <= 0) return;
+    let minutes = Number(minInput.value());
+    let seconds = Number(secInput.value());
 
+    if (isNaN(minutes) || isNaN(seconds) || minutes < 0 || seconds < 0 || seconds >= 60) {
+      alert('Please enter valid minutes (0 or more) and seconds (0-59).');
+      return;
+    }
+
+    totalTime = minutes * 60 + seconds;
+    if (totalTime <= 0) return;
+  
     timeLeft = totalTime;
     startTime = p.millis();
     isRunning = true;
@@ -69,10 +79,13 @@ registerSketch('sk2', function (p) {
       p.circle(particle.x, particle.y, 8);
     }
 
+    let displayMin = Math.floor(timeLeft / 60);
+    let displaySec = Math.floor(timeLeft % 60);
+
     p.text(
-      `Time Left: ${timeLeft.toFixed(1)}s`,
+      `Time Left: ${displayMin}:${displaySec.toString().padStart(2, '0')}`,
       p.width / 2,
-      p.height / 2
+      p.height / 2 + 60
     );
   };
 

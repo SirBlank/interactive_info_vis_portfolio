@@ -1,14 +1,56 @@
-// Instance-mode sketch for tab 3
 registerSketch('sk3', function (p) {
+
   p.setup = function () {
-    p.createCanvas(p.windowWidth, p.windowHeight);
+    p.createCanvas(800, 400);
   };
+
   p.draw = function () {
-    p.background(240, 200, 200);
-    p.fill(180, 60, 60);
-    p.textSize(32);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.text('HWK #4. B', p.width / 2, p.height / 2);
+    p.background(220);
+
+    let h = p.hour() % 24;
+
+    drawRadioList({
+      x: 40,
+      y: 80,
+      title: "HOURS",
+      count: 24,
+      selected: h,
+      columns: 2
+    });
   };
-  p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
+
+  function drawRadioList({ x, y, title, count, selected, columns }) {
+    let rowHeight = 22;
+    let colWidth = 70;
+    let radioR = 6;
+    let rows = Math.ceil(count / columns);
+
+    p.fill(0);
+    p.textSize(14);
+    p.text(title, x, y - 28);
+
+    for (let i = 0; i < count; i++) {
+      let row = i % rows;
+      let col = Math.floor(i / rows);
+
+      let rx = x + col * colWidth;
+      let ry = y + row * rowHeight;
+
+      p.stroke(0);
+      p.noFill();
+      p.circle(rx, ry + 7, radioR * 2);
+
+      if (i === selected) {
+        p.noStroke();
+        p.fill(0, 255, 0);
+        p.circle(rx, ry + 7, radioR);
+      }
+
+      p.fill(0);
+      p.textSize(12);
+      p.textAlign(p.LEFT, p.CENTER);
+      p.text(p.nf(i, 2), rx + 14, ry + 7);
+    }
+  }
+
 });

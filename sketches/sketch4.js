@@ -1,6 +1,7 @@
 registerSketch('sk4', function (p) {
   let radius;
   let lastClickDiff = null;
+  let easyMode = false;
   
   p.setup = function () {
     p.createCanvas(800, 800);
@@ -12,7 +13,13 @@ registerSketch('sk4', function (p) {
     let goalSecond = Math.floor(p.second() / 10) * 10;
     let goalTimeMs = goalSecond * 1000;
 
-    lastClickDiff = ((currentTimeMs - goalTimeMs + 5000) % 10000) - 5000;
+    lastClickDiff = ((currentTime - goalTimeMs + 5000) % 10000) - 5000;
+  };
+
+  p.keyPressed = function () {
+    if (p.key === 'e' || p.key === 'E') {
+      easyMode = !easyMode;
+    }
   };
 
   p.draw = function () {
@@ -41,11 +48,29 @@ registerSketch('sk4', function (p) {
     p.noStroke();
     p.ellipse(dotX, dotY, 20, 20);
 
+    if (easyMode) {
+      let h = p.hour();
+      let m = p.minute();
+      let s = p.second();
+      let ms = p.millis() % 1000;
+      let timestr = p.nf(h, 2) + ":" + p.nf(m, 2) + ":" + p.nf(s, 2) + "." + p.nf(ms, 3);
+      p.fill(0);
+      p.textSize(24);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.text(timestr, 0, -radius - 40);
+    }
+
     if (lastClickDiff !== null) {
       p.fill(0);
       p.textSize(16);
-      p.text(`Last click difference: ${lastClickDiff} ms`, 0, radius + 30);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.text(`Last click difference: ${lastClickDiff} ms`, 0, radius + 50);
     }
+
+    p.fill(0);
+    p.textSize(14);
+    p.textAlign(p.LEFT, p.BOTTOM);
+    p.text("Mode: " + (easyMode ? "Easy" : "Hard") + " (Press 'E' to toggle)", -radius, radius + 80);
   };
 
   p.windowResized = function () {

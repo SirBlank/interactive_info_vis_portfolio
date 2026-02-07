@@ -15,7 +15,8 @@ registerSketch('sk3', function (p) {
       title: "HOURS",
       count: 24,
       selected: h,
-      columns: 2
+      columns: 2,
+      color: p.color(255, 0, 0)
     });
 
     drawRadioList({
@@ -24,7 +25,8 @@ registerSketch('sk3', function (p) {
       title: "MINUTES",
       count: 60,
       selected: p.minute(),
-      columns: 4
+      columns: 4,
+      color: p.color(0, 255, 0)
     })
 
     drawRadioList({
@@ -33,11 +35,12 @@ registerSketch('sk3', function (p) {
       title: "SECONDS",
       count: 60,
       selected: p.second(),
-      columns: 4
+      columns: 4,
+      color: p.color(0, 0, 255)
     });
   };
 
-  function drawRadioList({ x, y, title, count, selected, columns }) {
+  function drawRadioList({ x, y, title, count, selected, columns, color }) {
     let rowHeight = 22;
     let colWidth = 70;
     let radioR = 6;
@@ -60,7 +63,7 @@ registerSketch('sk3', function (p) {
 
       if (i === selected) {
         p.noStroke();
-        p.fill(0, 255, 0);
+        p.fill(color);
         p.circle(rx, ry + 7, radioR);
       }
 

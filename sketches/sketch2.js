@@ -1,8 +1,6 @@
 registerSketch('sk2', function (p) {
   let minInput;
   let secInput;
-  let minLabel;
-  let secLabel;
   let startButton;
   let stopButton;
   let resetButton;

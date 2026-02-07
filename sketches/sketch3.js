@@ -1,7 +1,7 @@
 registerSketch('sk3', function (p) {
 
   p.setup = function () {
-    p.createCanvas(800, 400);
+    p.createCanvas(800, 450);
   };
 
   p.draw = function () {
@@ -17,6 +17,15 @@ registerSketch('sk3', function (p) {
       selected: h,
       columns: 2
     });
+
+    drawRadioList({
+      x: 300,
+      y: 80,
+      title: "MINUTES",
+      count: 60,
+      selected: p.minute(),
+      columns: 4
+    })
   };
 
   function drawRadioList({ x, y, title, count, selected, columns }) {

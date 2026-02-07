@@ -1,7 +1,9 @@
 registerSketch('sk2', function (p) {
   let minInput;
   let secInput;
-  let button;
+  let startButton;
+  let stopButton;
+  let pausedTime = 0;
   let totalTime = 0;
   let timeLeft = 0;
   let startTime = null;
@@ -17,8 +19,11 @@ registerSketch('sk2', function (p) {
 
     minInput = p.createInput('0');
     secInput = p.createInput('30');
-    button = p.createButton('Start Timer');
-    button.mousePressed(startTimer);
+    startButton = p.createButton('Start Timer');
+    startButton.mousePressed(startTimer);
+
+    stopButton = p.createButton('Stop Timer');
+    stopButton.mousePressed(stopTimer);
 
     particleY = p.height / 2;
 
@@ -49,6 +54,13 @@ registerSketch('sk2', function (p) {
         y: p.random(p.height),
       });
     }
+  }
+
+  function stopTimer() {
+    if (!isRunning) return;
+
+    pausedTime += (p.millis() - startTime);
+    isRunning = false;
   }
 
   p.draw = function () {

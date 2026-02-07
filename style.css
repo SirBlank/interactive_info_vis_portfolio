@@ -12,6 +12,12 @@ canvas {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
+img {
+  max-width: 50%;
+  height: auto;
+  display: block;
+}
+
 .tabs {
   display: flex;
   gap: 8px;

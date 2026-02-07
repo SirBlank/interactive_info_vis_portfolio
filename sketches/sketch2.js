@@ -47,7 +47,7 @@ registerSketch('sk2', function (p) {
     particleY = p.height / 2;
 
     p.textSize(32);
-    p.textAlign(p.CENTER, p.CENTER);
+    // p.textAlign(p.CENTER, p.CENTER);
 
     updateStartButtonLabel();
   };
@@ -153,6 +153,7 @@ registerSketch('sk2', function (p) {
     }
 
     p.fill(0);
+    p.noStroke();
     for (let particle of particles) {
       p.fill(particle.color);
       p.circle(particle.x, particle.y, 8);
@@ -162,10 +163,12 @@ registerSketch('sk2', function (p) {
     let displaySec = Math.floor(timeLeft % 60);
 
     p.fill(0);
+    p.textAlign(p.RIGHT, p.BOTTOM);
+    let padding = 20;
     p.text(
       `Time Left: ${displayMin}:${displaySec.toString().padStart(2, '0')}`,
-      p.width / 2,
-      p.height / 2 + 60
+      p.width - padding,
+      p.height - padding
     );
   };
 

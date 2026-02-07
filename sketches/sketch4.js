@@ -1,9 +1,18 @@
 registerSketch('sk4', function (p) {
   let radius;
+  let lastClickDiff = null;
   
   p.setup = function () {
     p.createCanvas(800, 800);
     radius = p.min(p.width, p.height) / 3;
+  };
+
+  p.mousePressed = function () {
+    let currentTime = p.second() * 1000 + p.millis() % 1000;
+    let goalSecond = Math.floor(p.second() / 10) * 10;
+    let goalTimeMs = goalSecond * 1000;
+
+    lastClickDiff = ((currentTimeMs - goalTimeMs + 5000) % 10000) - 5000;
   };
 
   p.draw = function () {
@@ -22,6 +31,7 @@ registerSketch('sk4', function (p) {
     }
 
     let s = p.second();
+    let ms = p.millis() % 1000;
     let goalSecond = Math.floor(s / 10) * 10;
     let angle = p.TWO_PI * (goalSecond / 60) - p.HALF_PI;
     let dotX = radius * 0.8 * p.cos(angle);
@@ -30,6 +40,12 @@ registerSketch('sk4', function (p) {
     p.fill(255, 0, 0);
     p.noStroke();
     p.ellipse(dotX, dotY, 20, 20);
+
+    if (lastClickDiff !== null) {
+      p.fill(0);
+      p.textSize(16);
+      p.text(`Last click difference: ${lastClickDiff} ms`, 0, radius + 30);
+    }
   };
 
   p.windowResized = function () {

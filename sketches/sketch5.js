@@ -6,7 +6,7 @@ registerSketch('sk5', function (p) {
   let outerRadius = 300;
 
   p.preload = function () {
-    hourlyData = p.loadJSON("../data/hourly_spotify_data.json");
+    hourlyData = p.loadJSON("./data/hourly_spotify_data.json");
   };
 
   p.setup = function () {

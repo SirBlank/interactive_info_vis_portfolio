@@ -1,5 +1,10 @@
 // HW 5: Narrative Visualization
 registerSketch('sk5', function (p) {
+  let centerX;
+  let centerY;
+  let innerRadius = 100;
+  let outerRadius = 300;
+
   p.preload = function () {
     hourlyData = p.loadJSON("../data/hourly_spotify_data.json");
   };
@@ -19,31 +24,18 @@ registerSketch('sk5', function (p) {
 
   p.draw = function () {
     p.background(250);
-
-    for (let i = 0; i < hourlyData.length; i++) {
-      let h = hourlyData[i];
-      let barHeight = p.map(h.minutesPlayed, 0, maxMinutes, 0, p.height - 100);
-      p.fill(0, 255, 0);
-      p.noStroke();
-      p.rect(i * (p.width / hourlyData.length), p.height - barHeight, (p.width / hourlyData.length) - 2, barHeight);
-
-      p.fill(0);
-      p.textSize(12);
-      p.text(i, i * (p.width / hourlyData.length) + (p.width / hourlyData.length) / 2, p.height);
-    }
+    centerX = p.width / 2;
+    centerY = p.height / 2;
 
     p.push();
-    p.fill(0);
-    p.textSize(16);
-    p.translate(30, p.height / 2);
-    p.rotate(-p.HALF_PI);
-    p.text("Minutes Played", 0, 0);
-    p.pop();
+    p.translate(centerX, centerY);
 
-    p.fill(0);
-    p.textSize(16);
-    p.text("Spotify Listening by Hour", p .width / 2, 30);
+    for (let i = 0; i < hourlyData.length; i++) {
+      let angle = p.map(i, 0, hourlyData.length, 0, p.TWO_PI);
+      p.stroke(200);
+      p.line(p.cos(angle) * innerRadius, p.sin(angle) * innerRadius, p.cos(angle) * outerRadius, p.sin(angle) * outerRadius);
 
+    }
   }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };

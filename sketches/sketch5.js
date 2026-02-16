@@ -26,7 +26,24 @@ registerSketch('sk5', function (p) {
       p.fill(0, 255, 0);
       p.noStroke();
       p.rect(i * (p.width / hourlyData.length), p.height - barHeight, (p.width / hourlyData.length) - 2, barHeight);
+
+      p.fill(0);
+      p.textSize(12);
+      p.text(i, i * (p.width / hourlyData.length) + (p.width / hourlyData.length) / 2, p.height);
     }
+
+    p.push();
+    p.fill(0);
+    p.textSize(16);
+    p.translate(30, p.height / 2);
+    p.rotate(-p.HALF_PI);
+    p.text("Minutes Played", 0, 0);
+    p.pop();
+
+    p.fill(0);
+    p.textSize(16);
+    p.text("Spotify Listening by Hour", p .width / 2, 30);
+
   }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };

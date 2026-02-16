@@ -18,6 +18,6 @@ grouped = df.groupby("hour").agg(
 grouped = grouped.round(3)
 
 print(grouped.head())
-grouped.to_json("hourly_spotify_data.json", orient="records")
+grouped.to_json("hourly_spotify_data.json", orient = "records")
 
 # print(df.head())

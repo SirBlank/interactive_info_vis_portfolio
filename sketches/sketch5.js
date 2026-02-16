@@ -72,6 +72,7 @@ registerSketch('sk5', function (p) {
     p.fill(255, 204, 0);
     p.arc(0, 0, sunSize, sunSize, 0, p.PI);
 
+    // Plot data
     for (let i = 0; i < hourlyData.length; i++) {
       let h = hourlyData[i];
       let angleStart = p.map(i, 0, hourlyData.length, 0, p.TWO_PI) - p.HALF_PI; // Start from hour 0 at the top
@@ -118,6 +119,7 @@ registerSketch('sk5', function (p) {
     }
     p.pop();
 
+    // Legends
     let legendX = 20;
     let legendY = 20;
     p.noStroke();

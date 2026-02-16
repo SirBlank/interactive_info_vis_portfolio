@@ -30,6 +30,22 @@ registerSketch('sk5', function (p) {
     p.push();
     p.translate(centerX, centerY);
 
+    p.fill(20, 30, 60);
+    p.arc(0, 0, innerRadius * 2, innerRadius * 2, p.PI, p.TWO_PI);
+    p.fill(255, 250, 200);
+    p.arc(0, 0, innerRadius * 2, innerRadius * 2, 0, p.PI);
+
+    p.stroke(200);
+    p.strokeWeight(1);
+    p.line(-innerRadius, 0, innerRadius, 0);
+
+    let sunSize = 25;
+    p.noStroke();
+    p.fill(255);
+    p.arc(0, 0, sunSize, sunSize, p.PI, p.TWO_PI);
+    p.fill(255, 204, 0);
+    p.arc(0, 0, sunSize, sunSize, 0, p.PI);
+
     for (let i = 0; i < hourlyData.length; i++) {
       let h = hourlyData[i];
       let angleStart = p.map(i, 0, hourlyData.length, 0, p.TWO_PI) - p.HALF_PI; // Start from hour 0 at the top

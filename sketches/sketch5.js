@@ -74,6 +74,24 @@ registerSketch('sk5', function (p) {
       let labelR = outerRadius+ 20;
       p.text(i, p.cos(angleStart) * labelR, p.sin(angleStart) * labelR);
     }
+    p.pop();
+
+    let legendX = 20;
+    let legendY = 20;
+    p.fill(0);
+    p.textAlign(p.LEFT);
+    p.textSize(14);
+    p.text("Device Type:", legendX, legendY);
+
+    p.fill(20, 136, 10);
+    p.rect(legendX, legendY + 10, 15, 15);
+    p.fill(0);
+    p.text("Mobile", legendX + 20, legendY + 22);
+    
+    p.fill(255, 110, 30);
+    p.rect(legendX, legendY + 35, 15, 15);
+    p.fill(0);
+    p.text("Desktop", legendX + 20, legendY + 47);
   }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };

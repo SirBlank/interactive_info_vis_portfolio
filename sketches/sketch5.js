@@ -31,10 +31,15 @@ registerSketch('sk5', function (p) {
     p.translate(centerX, centerY);
 
     for (let i = 0; i < hourlyData.length; i++) {
-      let angle = p.map(i, 0, hourlyData.length, 0, p.TWO_PI);
+      let angle = p.map(i, 0, hourlyData.length, 0, p.TWO_PI) - p.HALF_PI; // Start from hour 0 at the top
       p.stroke(200);
       p.line(p.cos(angle) * innerRadius, p.sin(angle) * innerRadius, p.cos(angle) * outerRadius, p.sin(angle) * outerRadius);
 
+      p.noStroke();
+      p.fill(150);
+      p.textAlign(p.CENTER, p.CENTER);
+      let labelR = outerRadius+ 20;
+      p.text(i, p.cos(angle) * labelR, p.sin(angle) * labelR);
     }
   }
 

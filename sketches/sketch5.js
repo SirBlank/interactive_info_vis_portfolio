@@ -42,7 +42,7 @@ registerSketch('sk5', function (p) {
       let desktopColor = p.color(255, desktopBrightness, 50);
       
       let currentRadius = p.map(h.minutesPlayed, 0, maxMinutes, innerRadius, outerRadius);
-      let mobileRadius = p.map(h.minutesPlayed * h.mobileShare, 0, maxMinutes, 0, currentRadius - innerRadius) + innerRadius;
+      let mobileRadius = innerRadius + (currentRadius - innerRadius) * h.mobileShare;
       
       // Mobile segment
       p.fill(mobileColor);
@@ -120,6 +120,58 @@ registerSketch('sk5', function (p) {
     p.textAlign(p.LEFT);
     p.textSize(14);
     p.text("Skip Rate Intensity", legendX, legendY + 110);
+
+    // Tooltip
+    let d = p.dist(p.mouseX, p.mouseY, centerX, centerY);
+
+    if (d > innerRadius && d < outerRadius + 50) {
+      let angle = p.atan2(p.mouseY - centerY, p.mouseX - centerX);
+      let adjustedAngle = angle + p.HALF_PI;
+      if (adjustedAngle < 0) adjustedAngle += p.TWO_PI;
+      let hourIndex = p.floor(p.map(adjustedAngle, 0, p.TWO_PI, 0, hourlyData.length));
+
+      if (hourIndex >= 0 && hourIndex < hourlyData.length) {
+        let h = hourlyData[hourIndex];
+
+        let tipW = 180;
+        let tipH = 110;
+        let offsetX = 15;
+        let offsetY = 15;
+
+        p.push();
+        p.translate(p.mouseX + offsetX, p.mouseY + offsetY);
+
+        p.fill(255, 245);
+        p.stroke(200);
+        p.strokeWeight(1);
+        p.rect(0, 0, tipW, tipH, 8);
+
+        p.noStroke();
+        p.textAlign(p.LEFT, p.TOP);
+        p.fill(0);
+        p.textStyle(p.BOLD);
+        p.textSize(14);
+        p.text(`Hour ${hourIndex}:00`, 10, 10);
+
+        p.textStyle(p.NORMAL);
+        p.textSize(12);
+        p.fill(50);
+        p.text(`• Minutes: ${h.minutesPlayed}`, 10, 32);
+        p.text(`• Skip Rate: ${(h.skipRate * 100).toFixed(1)}%`, 10, 50);
+
+        p.fill(20, 136, 10);
+        p.ellipse(15, 76, 8, 8);
+        p.fill(50);
+        p.text(`Mobile: ${(h.mobileShare * 100).toFixed(1)}%`, 25, 70);
+
+        p.fill(255, 110, 30);
+        p.ellipse(15, 94, 8, 8);
+        p.fill(50);
+        p.text(`Desktop: ${((1 - h.mobileShare) * 100).toFixed(1)}%`, 25, 88);
+
+        p.pop();
+      }
+    }
   }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };

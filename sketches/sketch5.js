@@ -129,15 +129,15 @@ registerSketch('sk5', function (p) {
     p.textSize(14);
     p.text("Device Type:", legendX, legendY);
 
-    p.fill(20, 136, 10);
+    p.fill(255, 110, 30);
     p.rect(legendX, legendY + 20, 15, 15);
     p.fill(0);
-    p.text("Mobile", legendX + 20, legendY + 22);
+    p.text("Desktop", legendX + 20, legendY + 22);
     
-    p.fill(255, 110, 30);
+    p.fill(20, 136, 10);
     p.rect(legendX, legendY + 45, 15, 15);
     p.fill(0);
-    p.text("Desktop", legendX + 20, legendY + 47);
+    p.text("Mobile", legendX + 20, legendY + 47);
 
     p.textSize(10);
     p.fill(100);

@@ -33,12 +33,12 @@ registerSketch('sk5', function (p) {
     p.fill(50);
     p.textSize(18);
     p.textStyle(p.BOLD);
-    p.text("My Personal Spotify Listening Patterns by Hour", centerX, 20);
+    p.text("My Personal Spotify Listening Patterns", centerX, 20);
 
     p.fill(100);
     p.textSize(14);
     p.textStyle(p.NORMAL);
-    p.text("Mapping Minutes Played, Skip Rates, and Device Shares Across the Day (data from 2017-2026).", centerX, 50);
+    p.text("Mapping Minutes Played, Skip Rates, and Device Shares Across the Day by Hour (data from 2017-2026).", centerX, 50);
 
     p.push();
     p.translate(centerX, centerY);

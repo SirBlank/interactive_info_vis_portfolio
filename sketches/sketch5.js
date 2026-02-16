@@ -11,7 +11,7 @@ registerSketch('sk5', function (p) {
 
   p.setup = function () {
     hourlyData = Object.values(hourlyData);
-    p.createCanvas(1000, 700);
+    p.createCanvas(1000, 800);
 
     maxMinutes = 0;
     for (let h of hourlyData) {
@@ -27,10 +27,24 @@ registerSketch('sk5', function (p) {
     centerX = p.width / 2;
     centerY = p.height / 2;
 
+    // Title
+    p.textAlign(p.CENTER, p.TOP);
+    p.noStroke();
+    p.fill(50);
+    p.textSize(18);
+    p.textStyle(p.BOLD);
+    p.text("Spotify Listening Patterns by Hour", centerX, 20);
+
+    p.fill(100);
+    p.textSize(14);
+    p.textStyle(p.NORMAL);
+    p.text("Mapping Minutes Played, Skip Rates, and Device Shares Across the Day.", centerX, 50);
+
     p.push();
     p.translate(centerX, centerY);
 
     p.fill(20, 30, 60);
+    p.textSize(13);
     p.arc(0, 0, innerRadius * 2, innerRadius * 2, p.PI, p.TWO_PI);
     p.fill(255, 250, 200);
     p.arc(0, 0, innerRadius * 2, innerRadius * 2, 0, p.PI);
@@ -97,16 +111,17 @@ registerSketch('sk5', function (p) {
     p.noStroke();
     p.fill(0);
     p.textAlign(p.LEFT);
+    p.textStyle(p.NORMAL);
     p.textSize(14);
     p.text("Device Type:", legendX, legendY);
 
     p.fill(20, 136, 10);
-    p.rect(legendX, legendY + 10, 15, 15);
+    p.rect(legendX, legendY + 20, 15, 15);
     p.fill(0);
     p.text("Mobile", legendX + 20, legendY + 22);
     
     p.fill(255, 110, 30);
-    p.rect(legendX, legendY + 35, 15, 15);
+    p.rect(legendX, legendY + 45, 15, 15);
     p.fill(0);
     p.text("Desktop", legendX + 20, legendY + 47);
 

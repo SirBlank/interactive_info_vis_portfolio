@@ -43,11 +43,23 @@ registerSketch('sk5', function (p) {
     p.push();
     p.translate(centerX, centerY);
 
+    // Night/day middle circle
     p.fill(20, 30, 60);
-    p.textSize(13);
     p.arc(0, 0, innerRadius * 2, innerRadius * 2, p.PI, p.TWO_PI);
     p.fill(255, 250, 200);
     p.arc(0, 0, innerRadius * 2, innerRadius * 2, 0, p.PI);
+
+    p.randomSeed(1);
+    p.fill(255);
+    p.noStroke();
+    for (let i = 0; i < 30; i++) {
+      let angle = p.random(p.PI, p.TWO_PI);
+      let d = p.random(innerRadius * 0.3, innerRadius * 0.95);
+      let x = p.cos(angle) * d;
+      let y = p.sin(angle) * d;
+      let starSize = p.random(1, 2.5);
+      p.ellipse(x, y, starSize, starSize);
+    }
 
     p.stroke(200);
     p.strokeWeight(1);

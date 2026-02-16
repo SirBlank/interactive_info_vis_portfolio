@@ -164,8 +164,8 @@ registerSketch('sk5', function (p) {
       if (hourIndex >= 0 && hourIndex < hourlyData.length) {
         let h = hourlyData[hourIndex];
 
-        let tipW = 180;
-        let tipH = 110;
+        let toolWidth = 180;
+        let toolHeight = 110;
         let offsetX = 15;
         let offsetY = 15;
 
@@ -175,20 +175,20 @@ registerSketch('sk5', function (p) {
         p.fill(255, 245);
         p.stroke(200);
         p.strokeWeight(1);
-        p.rect(0, 0, tipW, tipH, 8);
+        p.rect(0, 0, toolWidth, toolHeight, 4);
 
         p.noStroke();
         p.textAlign(p.LEFT, p.TOP);
         p.fill(0);
         p.textStyle(p.BOLD);
         p.textSize(14);
-        p.text(`Hour ${hourIndex}:00`, 10, 10);
+        p.text(`Hour ${hourIndex}`, 10, 10);
 
         p.textStyle(p.NORMAL);
         p.textSize(12);
         p.fill(50);
-        p.text(`• Minutes: ${h.minutesPlayed}`, 10, 32);
-        p.text(`• Skip Rate: ${(h.skipRate * 100).toFixed(1)}%`, 10, 50);
+        p.text(`Minutes: ${h.minutesPlayed}`, 10, 32);
+        p.text(`Skip Rate: ${(h.skipRate * 100).toFixed(1)}%`, 10, 50);
 
         p.fill(20, 136, 10);
         p.ellipse(15, 76, 8, 8);
@@ -198,7 +198,7 @@ registerSketch('sk5', function (p) {
         p.fill(255, 110, 30);
         p.ellipse(15, 94, 8, 8);
         p.fill(50);
-        p.text(`Desktop: ${((1 - h.mobileShare) * 100).toFixed(1)}%`, 25, 88);
+        p.text(`Desktop: ${((h.desktopShare) * 100).toFixed(1)}%`, 25, 88);
 
         p.pop();
       }

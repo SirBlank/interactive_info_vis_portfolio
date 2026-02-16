@@ -38,7 +38,7 @@ registerSketch('sk5', function (p) {
     p.fill(100);
     p.textSize(14);
     p.textStyle(p.NORMAL);
-    p.text("Mapping Minutes Played, Skip Rates, and Device Shares Across the Day by Hour (data from 2017-2026).", centerX, 50);
+    p.text("Mapping Minutes Played, Skip Rates, and Device Types by Hour of Day (data from 2017-2026).", centerX, 50);
 
     p.push();
     p.translate(centerX, centerY);

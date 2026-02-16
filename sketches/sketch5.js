@@ -11,7 +11,7 @@ registerSketch('sk5', function (p) {
 
   p.setup = function () {
     hourlyData = Object.values(hourlyData);
-    p.createCanvas(700, 700);
+    p.createCanvas(1000, 700);
 
     maxMinutes = 0;
     for (let h of hourlyData) {
@@ -78,6 +78,7 @@ registerSketch('sk5', function (p) {
 
     let legendX = 20;
     let legendY = 20;
+    p.noStroke();
     p.fill(0);
     p.textAlign(p.LEFT);
     p.textSize(14);
@@ -92,6 +93,33 @@ registerSketch('sk5', function (p) {
     p.rect(legendX, legendY + 35, 15, 15);
     p.fill(0);
     p.text("Desktop", legendX + 20, legendY + 47);
+
+    p.textSize(10);
+    p.fill(100);
+    p.textAlign(p.LEFT);
+    p.text("High", legendX + 100, legendY + 70);
+
+    p.textAlign(p.RIGHT);
+    p.text("Low", legendX + 20, legendY + 70);
+
+    let gradWidth = 120;
+    let gradHeight = 10;
+    for (let i = 0; i < gradWidth; i++) {
+      let scale = p.map(i, 0, gradWidth, 0, 1);
+      let mobileGrad = p.color(20, p.map(scale, 0, 1, 255, 20), 10);
+      let desktopGrad = p.color(255, p.map(scale, 0, 1, 255, 30), 50);
+
+      p.stroke(mobileGrad);
+      p.line(legendX + i, legendY + 80, legendX + i, legendY + 80 + gradHeight / 2);
+      p.stroke(desktopGrad);
+      p.line(legendX + i, legendY + 80 + gradHeight / 2, legendX + i, legendY + 80 + gradHeight);
+    }
+
+    p.noStroke();
+    p.fill(0);
+    p.textAlign(p.LEFT);
+    p.textSize(14);
+    p.text("Skip Rate Intensity", legendX, legendY + 110);
   }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };

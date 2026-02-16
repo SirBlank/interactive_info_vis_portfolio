@@ -4,8 +4,6 @@ registerSketch('sk5', function (p) {
   let centerY;
   let innerRadius = 50;
   let outerRadius = 300;
-  let color1 = p.color(0, 120, 120);
-  let color2 = p.color(120, 0, 120);
 
   p.preload = function () {
     hourlyData = p.loadJSON("../data/hourly_spotify_data.json");
@@ -36,11 +34,16 @@ registerSketch('sk5', function (p) {
       let h = hourlyData[i];
       let angleStart = p.map(i, 0, hourlyData.length, 0, p.TWO_PI) - p.HALF_PI; // Start from hour 0 at the top
       let angleEnd = p.map(i + 1, 0, hourlyData.length, 0, p.TWO_PI) - p.HALF_PI;
-      let mobileColor = p.lerpColor(color1, color2, h.skipRate);
-      let desktopColor = p.lerpColor(p.color(40), color2, h.skipRate * .5);
+      
+      let mobileBrightness = p.map(h.skipRate, 0, 1, 255, 20);
+      let mobileColor = p.color(20, mobileBrightness, 10);
+      
+      let desktopBrightness = p.map(h.skipRate, 0, 1, 255, 30);
+      let desktopColor = p.color(255, desktopBrightness, 50);
       
       let currentRadius = p.map(h.minutesPlayed, 0, maxMinutes, innerRadius, outerRadius);
       let mobileRadius = p.map(h.minutesPlayed * h.mobileShare, 0, maxMinutes, 0, currentRadius - innerRadius) + innerRadius;
+      
       // Mobile segment
       p.fill(mobileColor);
       p.stroke(200);
